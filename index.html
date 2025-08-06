@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+            transform: perspective(3000px) rotateX(45deg) rotateY(45deg) scale(0.2) translateZ(-2000px);
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            overflow: hidden;
+            filter: blur(20px) brightness(0);
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: perspective(3000px) rotateX(0) rotateY(0) scale(1) translateZ(0);
+            pointer-events: auto;
+            z-index: 2;
+            filter: blur(0) brightness(1);
+            animation: activeSection 2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                       sectionGlow 4s ease-in-out infinite;
+        }
+
+        .section.leaving {
+            animation: letterFloat 2s forwards;
+        }
+
+        .section.prev {
+            opacity: 0;
+            transform: perspective(2000px) rotateY(-90deg) scale(0.5) translateZ(-1000px);
+            filter: blur(10px) brightness(0.5);
+        }
+
+        .section.next {
+            opacity: 0;
+            transform: perspective(2000px) rotateY(90deg) scale(0.5) translateZ(-1000px);
+            filter: blur(10px) brightness(0.5);
+        }
+
+        @keyframes activeSection {
+            0% { 
+                filter: blur(30px) brightness(0) contrast(2);
+                transform: perspective(3000px) rotateX(45deg) rotateY(45deg) scale(0.2) translateZ(-2000px);
+            }
+            30% { 
+                filter: blur(15px) brightness(1.5) contrast(1.5);
+                transform: perspective(3000px) rotateX(-10deg) rotateY(-10deg) scale(1.2) translateZ(500px);
+            }
+            70% {
+                filter: blur(5px) brightness(1.2) contrast(1.2);
+                transform: perspective(3000px) rotateX(5deg) rotateY(5deg) scale(1.1) translateZ(200px);
+            }
+            100% { 
+                filter: blur(0) brightness(1) contrast(1);
+                transform: perspective(3000px) rotateX(0) rotateY(0) scale(1) translateZ(0);
+            }
+        }
+
+        @keyframes sectionGlow {
+            0%, 100% { filter: brightness(1) saturate(1); }
+            50% { filter: brightness(1.3) saturate(1.5); }
+        }
+
+        .content {
+            transform-style: preserve-3d;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: contentFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes contentFloat {
+            0%, 100% { 
+                transform: translateZ(0) translateY(0) rotateX(0) rotateY(0);
+                filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            }
+            25% { 
+                transform: translateZ(50px) translateY(-20px) rotateX(5deg) rotateY(-5deg);
+                filter: drop-shadow(0 0 40px rgba(255,255,255,0.5));
+            }
+            75% { 
+                transform: translateZ(30px) translateY(10px) rotateX(-3deg) rotateY(3deg);
+                filter: drop-shadow(0 0 30px rgba(255,255,255,0.4));
+            }
+        }
+
+        #section1 {
+            background: linear-gradient(-45deg, #FF3CAC, #784BA0, #2B86C5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        #section2 {
+            background: linear-gradient(-45deg, #FF3CAC, #FFB86C, #2B86C5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .cake {
+            font-size: 120px;
+            position: relative;
+            animation: bounce 2s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            margin: 20px;
+        }
+
+        .firework {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: explode 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        .balloon {
+            font-size: 40px;
+            position: absolute;
+            animation: floatBalloon 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+        }
+
+        .birthday-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 72px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF69B4, #00FFFF, #FFD700);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 
+                0 0 30px rgba(255,215,0,0.5),
+                0 0 60px rgba(255,105,180,0.4),
+                0 0 90px rgba(0,255,255,0.3);
+            margin: 20px;
+            animation: 
+                shimmer 8s linear infinite,
+                textPop 3s ease-in-out infinite,
+                textGlow 2s ease-in-out infinite,
+                textFloat 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .birthday-text::before,
+        .birthday-text::after {
+            content: attr(data-text);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: inherit;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textSplit 2s ease-in-out infinite;
+        }
+
+        .birthday-text::before {
+            text-shadow: -2px 0 #ff00ff;
+            animation-delay: -0.5s;
+        }
+
+        .birthday-text::after {
+            text-shadow: 2px 0 #00ffff;
+            animation-delay: -1s;
+        }
+
+        .wish-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 56px;
+            background: linear-gradient(90deg, #FFD700, #FF69B4, #87CEEB, #FFD700);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s infinite, floatingText 3s ease-in-out infinite;
+            text-shadow: 
+                0 0 10px rgba(255,215,0,0.3),
+                0 0 20px rgba(255,215,0,0.2),
+                0 0 30px rgba(255,215,0,0.1);
+        }
+
+        .birthday-text-sub, .wish-text-sub {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+            box-sizing: border-box;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .ornaments {
+            font-size: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 80vh;
+            animation: floatSideways 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .left { margin-right: 60px; }
+        .right { margin-left: 60px; }
+
+        .lanterns {
+            font-size: 60px;
+            margin-bottom: 30px;
+            animation: swingLantern 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255,165,0,0.5));
+        }
+
+        .dragons {
+            font-size: 80px;
+            margin-top: 30px;
+            animation: flyDragon 15s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.4));
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+
+        @keyframes explode {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+                filter: brightness(1.5) blur(0px);
+            }
+            50% { 
+                transform: scale(25) rotate(180deg); 
+                opacity: 0.5;
+                filter: brightness(2) blur(2px);
+            }
+            100% { 
+                transform: scale(50) rotate(360deg); 
+                opacity: 0;
+                filter: brightness(1) blur(5px);
+            }
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 4px;
+            height: 20px;
+            border-radius: 50%;
+            animation: particleExplode 1s ease-out forwards;
+            transform-origin: center bottom;
+        }
+
+        @keyframes particleExplode {
+            0% { 
+                transform: scale(1) translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(0) translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { 
+                transform: scale(0) rotate(0deg); 
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1) rotate(180deg); 
+                opacity: 1;
+            }
+        }
+
+        @keyframes floatBalloon {
+            0% { transform: translateY(100vh) rotate(-5deg); }
+            50% { transform: translateY(50vh) rotate(5deg); }
+            100% { transform: translateY(-20vh) rotate(-5deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+            50% { background-position: 100% 50%; filter: hue-rotate(180deg); }
+            100% { background-position: 0% 50%; filter: hue-rotate(360deg); }
+        }
+
+        @keyframes textPop {
+            0%, 100% { 
+                transform: scale(1) translateZ(0) rotateX(0) rotateY(0);
+                filter: brightness(1) blur(0px);
+            }
+            25% { 
+                transform: scale(1.1) translateZ(100px) rotateX(10deg) rotateY(-10deg);
+                filter: brightness(1.3) blur(2px);
+            }
+            75% { 
+                transform: scale(1.05) translateZ(50px) rotateX(-5deg) rotateY(5deg);
+                filter: brightness(1.2) blur(1px);
+            }
+        }
+
+        @keyframes textSplit {
+            0%, 100% { 
+                transform: translateX(0) skew(0deg);
+                opacity: 0.3;
+            }
+            20% { 
+                transform: translateX(-15px) skew(-15deg);
+                opacity: 0.5;
+            }
+            80% { 
+                transform: translateX(15px) skew(15deg);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes textFloat {
+            0%, 100% {
+                transform: translateY(0) translateZ(0);
+                text-shadow: 
+                    0 0 30px rgba(255,215,0,0.5),
+                    0 0 60px rgba(255,105,180,0.4),
+                    0 0 90px rgba(0,255,255,0.3);
+            }
+            50% {
+                transform: translateY(-15px) translateZ(30px);
+                text-shadow: 
+                    0 0 50px rgba(255,215,0,0.7),
+                    0 0 100px rgba(255,105,180,0.6),
+                    0 0 150px rgba(0,255,255,0.5);
+            }
+        }
+
+        @keyframes floatingText {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes sparkleEffect {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkleEffect 1s ease-in-out infinite;
+        }
+
+        @keyframes swingLantern {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        @keyframes floatSideways {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(15px); }
+        }
+
+        @keyframes flyDragon {
+            0% { transform: translateX(-200%) scale(0.5) rotate(5deg); }
+            50% { transform: translateX(0) scale(1) rotate(-5deg); }
+            100% { transform: translateX(200%) scale(0.5) rotate(5deg); }
+        }
+
+        .section-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.2);
+        }
+
+        .gift-box {
+            font-size: 150px;
+            animation: giftBounce 2s infinite;
+        }
+
+        .floating-gifts {
+            font-size: 40px;
+            /* Removed animation: floatAround 8s infinite; so the emojis do not rotate/spin */
+        }
+
+        .butterfly-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .nature-elements {
+            font-size: 40px;
+            margin: 20px;
+            animation: natureSway 4s infinite;
+        }
+
+        .firework-finale {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .finale-text {
+            font-size: 100px;
+            font-family: 'Ma Shan Zheng', cursive;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .drone-show {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            perspective: 3000px;
+            transform-style: preserve-3d;
+            transform: translateZ(-1000px);
+            filter: blur(0);
+            transition: filter 1s ease;
+        }
+
+        .drone-show:hover {
+            filter: blur(2px);
+        }
+
+        .drone {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 15px #fff,
+                0 0 30px #fff,
+                0 0 45px #fff,
+                0 0 60px #0ff,
+                0 0 100px #0ff,
+                0 0 150px rgba(0,255,255,0.5);
+            transform-style: preserve-3d;
+            z-index: 10;
+            animation: droneGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes droneGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 15px #fff,
+                    0 0 30px #fff,
+                    0 0 45px #fff,
+                    0 0 60px #0ff,
+                    0 0 100px #0ff,
+                    0 0 150px rgba(0,255,255,0.5);
+            }
+            50% {
+                box-shadow: 
+                    0 0 20px #fff,
+                    0 0 40px #fff,
+                    0 0 60px #fff,
+                    0 0 80px #0ff,
+                    0 0 120px #0ff,
+                    0 0 200px rgba(0,255,255,0.7);
+            }
+        }
+
+        .drone-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,255,255,0.8) 0%, rgba(0,255,255,0) 70%);
+            border-radius: 50%;
+            transform: scale(3);
+            opacity: 0.5;
+            mix-blend-mode: screen;
+        }
+
+        .drone-beam {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(0,255,255,0) 0%,
+                rgba(0,255,255,0.5) 50%,
+                rgba(0,255,255,0) 100%);
+            transform-origin: left center;
+            opacity: 0.3;
+            animation: beamFade 0.5s ease-out forwards;
+        }
+
+        @keyframes beamFade {
+            0% { opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0; }
+        }
+
+        .drone::before {
+            content: '🚁';
+            position: absolute;
+            font-size: 20px;
+            transform: translate(-50%, -50%) scale(0.5);
+            filter: brightness(1.5);
+        }
+
+        @keyframes droneFloat {
+            0%, 100% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            25% {
+                transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            }
+            75% {
+                transform: translateY(10px) rotateX(-5deg) rotateY(-5deg);
+            }
+        }
+
+        @keyframes droneFormation {
+            0% {
+                transform: translate(var(--start-x), var(--start-y)) scale(0);
+                opacity: 0;
+            }
+            30% {
+                transform: translate(var(--start-x), var(--start-y)) scale(1);
+                opacity: 1;
+            }
+            60% {
+                transform: translate(var(--end-x), var(--end-y)) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--end-x), var(--end-y)) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .finale-emoji {
+            font-size: 80px;
+            margin: 30px;
+            animation: finalePop 2s infinite;
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.5));
+        }
+
+        @keyframes finalePop {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.2); filter: brightness(1.3); }
+        }
+
+        .finale-wish {
+            font-size: 60px;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        .sparkle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @keyframes giftBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(10deg); }
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -50px) rotate(90deg); }
+            50% { transform: translate(0, -100px) rotate(180deg); }
+            75% { transform: translate(-50px, -50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        @keyframes natureSway {
+            0%, 100% { transform: translateX(-20px) rotate(-5deg); }
+            50% { transform: translateX(20px) rotate(5deg); }
+        }
+
+        @keyframes spiralNature {
+            0% { transform: translate(-50%, -50%) scale(0.2) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes waveNature {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(50vh) scale(1.5); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        @keyframes zigzagNature {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            20% { transform: translate(100px, 100px) scale(1); opacity: 1; }
+            40% { transform: translate(-100px, 200px) scale(1.2); }
+            60% { transform: translate(100px, 300px) scale(1); }
+            80% { transform: translate(-100px, 400px) scale(0.8); opacity: 1; }
+            100% { transform: translate(0, 500px) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes circleNature {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(200px) scale(0.8); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) translateX(200px) scale(1.2); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(200px) scale(0.8); }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.7); }
+            50% { text-shadow: 0 0 50px rgba(255, 20, 147, 0.9); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        #section3 { background: linear-gradient(-45deg, #FF1493, #4B0082, #00FFFF); }
+        #section4 { background: linear-gradient(-45deg, #00FA9A, #4169E1, #FF69B4); }
+        #section5 { background: linear-gradient(-45deg, #FFD700, #FF4500, #9400D3); }
+
+        .magical { animation: magicalText 3s infinite; }
+        .nature { animation: natureGlow 4s infinite; }
+
+        @keyframes magicalText {
+            0% { transform: scale(1); filter: hue-rotate(0deg); }
+            50% { transform: scale(1.1); filter: hue-rotate(180deg); }
+            100% { transform: scale(1); filter: hue-rotate(360deg); }
+        }
+
+        @keyframes natureGlow {
+            0% { color: #00FA9A; }
+            50% { color: #87CEEB; }
+            100% { color: #00FA9A; }
+        }
+
+        .transition-burst {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--color);
+            border-radius: 50%;
+            z-index: 1000;
+            animation: burstOut 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes burstOut {
+            0% {
+                transform: scale(1) rotate(var(--angle));
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                transform: scale(50) rotate(calc(var(--angle) + 360deg));
+                opacity: 0;
+                filter: blur(5px);
+            }
+        }
+
+        /* 3D Perspective Container */
+        #perspective-container {
+            perspective: 1000px;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Enhanced Section Transitions */
+        .section {
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .section.active .content {
+            animation: contentPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes contentPop {
+            0% { transform: scale(0.8) translateZ(-100px) rotateX(-20deg); opacity: 0; filter: blur(10px); }
+            50% { transform: scale(1.1) translateZ(50px) rotateX(10deg); opacity: 0.8; filter: blur(5px); }
+            100% { transform: scale(1) translateZ(0) rotateX(0); opacity: 1; filter: blur(0); }
+        }
+
+        @keyframes letterFloatWithBalloon {
+            0% { 
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(var(--float-x, 100px), -100vh) rotate(var(--float-rotation, 360deg)) scale(1.5);
+                opacity: 0.7;
+            }
+            100% { 
+                transform: translate(calc(var(--float-x) * 2), -200vh) rotate(var(--float-rotation, 720deg)) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes letterFirework {
+            0% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            50% {
+                transform: translate(var(--explosion-x, 100px), var(--explosion-y, -100px)) scale(2);
+                opacity: 0.8;
+                filter: brightness(2);
+            }
+            100% {
+                transform: translate(calc(var(--explosion-x) * 2), calc(var(--explosion-y) * 2)) scale(0);
+                opacity: 0;
+                filter: brightness(0);
+            }
+        }
+
+        @keyframes letterGift {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(var(--gift-x, 50px), var(--gift-y, -50px)) rotate(var(--gift-rotation, 180deg)) scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(var(--target-x, 100px), var(--target-y, -100px)) rotate(var(--gift-rotation, 360deg)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes letterNature {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(var(--wind-x, 50px), var(--wind-y, -25px)) rotate(var(--wind-rotation, 180deg)) scale(1.1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(calc(var(--wind-x) * 3), calc(var(--wind-y) * 3)) rotate(calc(var(--wind-rotation) * 2)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes letterFinale {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+                filter: brightness(1) blur(0);
+            }
+            50% {
+                transform: translate(var(--finale-x, 100px), var(--finale-y, -100px)) scale(2) rotate(var(--finale-rotation, 360deg));
+                opacity: 0.8;
+                filter: brightness(2) blur(2px);
+            }
+            100% {
+                transform: translate(calc(var(--finale-x) * 2), calc(var(--finale-y) * 2)) scale(0) rotate(calc(var(--finale-rotation) * 2));
+                opacity: 0;
+                filter: brightness(3) blur(5px);
+            }
+        }
+
+        .floating-letter {
+            position: relative;
+            font-size: inherit;
+            display: inline-block;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        }
+
+        .floating-letter.balloon-float {
+            animation: floatWithBalloon 2s ease-in-out forwards;
+            animation-delay: var(--float-delay, 0s);
+            opacity: 1;
+        }
+
+        .char-balloon {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            opacity: 0;
+            animation: balloonAppear 0.3s ease-in-out forwards;
+            animation-delay: calc(var(--float-delay) - 0.3s);
+        }
+
+        @keyframes floatWithBalloon {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(calc(var(--float-side) * 0.2), calc(var(--float-distance) * 0.2));
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(var(--float-side), var(--float-distance)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes balloonAppear {
+            0% {
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .floating-letter.balloon-effect {
+            animation-name: letterFloatWithBalloon;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-letter.firework-effect {
+            animation-name: letterFirework;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .floating-letter.gift-effect {
+            animation-name: letterGift;
+            animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .floating-letter.nature-effect {
+            animation-name: letterNature;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-letter.finale-effect {
+            animation-name: letterFinale;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes sectionTransition1 {
+            0% { transform: translateX(100%) rotate(30deg); filter: hue-rotate(0deg); }
+            100% { transform: translateX(0) rotate(0deg); filter: hue-rotate(360deg); }
+        }
+
+        @keyframes sectionTransition2 {
+            0% { transform: translateY(100%) scale(0.5); filter: brightness(0); }
+            50% { transform: translateY(-10%) scale(1.1); filter: brightness(1.5); }
+            100% { transform: translateY(0) scale(1); filter: brightness(1); }
+        }
+
+        @keyframes sectionTransition3 {
+            0% { transform: scale(2) rotate(-45deg); filter: blur(20px); }
+            100% { transform: scale(1) rotate(0); filter: blur(0); }
+        }
+
+        @keyframes sectionTransition4 {
+            0% { transform: perspective(2000px) rotateX(90deg) rotateY(45deg) scale(0.3); opacity: 0; filter: blur(20px); }
+            50% { transform: perspective(2000px) rotateX(-20deg) rotateY(-10deg) scale(1.2); opacity: 0.7; filter: blur(5px); }
+            100% { transform: perspective(2000px) rotateX(0) rotateY(0) scale(1); opacity: 1; filter: blur(0); }
+        }
+
+        @keyframes sectionTransition5 {
+            0% { transform: perspective(3000px) rotateY(180deg) translateZ(-2000px) scale(0.1); filter: brightness(0) blur(30px); }
+            30% { transform: perspective(3000px) rotateY(-30deg) translateZ(500px) scale(1.4); filter: brightness(2) blur(10px); }
+            70% { transform: perspective(3000px) rotateY(20deg) translateZ(200px) scale(1.2); filter: brightness(1.5) blur(5px); }
+            100% { transform: perspective(3000px) rotateY(0) translateZ(0) scale(1); filter: brightness(1) blur(0); }
+        }
+
+        /* Smooth Dot Transitions */
+        .dot {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dot::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 50%;
+        }
+
+        .dot.active::after {
+            transform: scale(1);
+        }
+
+        /* Enhanced Background Transitions */
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: -1;
+        }
+
+        .section.active::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="WhatsApp Audio 2025-08-05 at 08.49.19_8b7fd827.mp3" type="audio/mp3">
+    </audio>
+    <div class="nav-buttons">
+        <div style="position: fixed; top: 30px; left: 30px; display: flex; gap: 10px; z-index: 1001;">
+            <button onclick="prevSection()" class="nav-btn">❮</button>
+            <button onclick="nextSection()" class="nav-btn">❯</button>
+        </div>
+        <button onclick="toggleMusic()" class="nav-btn" style="position: fixed; top: 30px; right: 30px">🎵</button>
+    </div>
+    <div class="section-indicator">
+        <span class="dot" onclick="goToSection(1)"></span>
+        <span class="dot" onclick="goToSection(2)"></span>
+        <span class="dot" onclick="goToSection(3)"></span>
+        <span class="dot" onclick="goToSection(4)"></span>
+        <span class="dot" onclick="goToSection(5)"></span>
+    </div>
+    <div id="section1" class="section active">
+        <div class="content">
+            <div class="ornaments left">🎊 🎋 🎍</div>
+            <div class="main-content">
+                <div class="lanterns">🏮 🏮 🏮</div>
+                <div class="cake-container">
+                    <div class="cake">🎂</div>
+                    <div class="sparkles">✨</div>
+                </div>
+                <div class="birthday-text">生日快乐！</div>
+                <div class="birthday-text-sub">Happy Birthday!</div>
+                <div class="birthday-text-sub">Untuk Gumelar</div>
+                <div id="fireworks"></div>
+            </div>
+            <div class="ornaments right">🎋 🎍 🎊</div>
+        </div>
+    </div>
+    <div id="section2" class="section">
+        <div class="content">
+            <div class="ornaments left">✨ 🎐 💫</div>
+            <div class="main-content">
+                <div class="wish-text">福如东海 寿比南山</div>
+                <div class="wish-text-sub">Semoga Sehat Selalu!</div>
+                <div id="balloons"></div>
+                <div class="dragons">🐉 🐉</div>
+            </div>
+            <div class="ornaments right">💫 🎐 ✨</div>
+        </div>
+    </div>
+    <div id="section3" class="section">
+        <div class="content">
+            <div class="stars-container"></div>
+            <div class="main-content">
+                <div class="gift-box">🎁</div>
+                <div class="wish-text magical">愿望成真</div>
+                <div class="wish-text-sub">May All Your Dreams Come True!</div>
+                <div class="floating-gifts">
+                    🎁 💝 🎀
+                </div>
+            </div>
+            <div class="confetti-container"></div>
+        </div>
+    </div>
+    <div id="section4" class="section">
+        <div class="content">
+            <div class="butterfly-container"></div>
+            <div class="main-content">
+                <div class="flower-crown">🌸 👑 🌸</div>
+                <div class="wish-text nature">幸福安康</div>
+                <div class="wish-text-sub">Health and Happiness!</div>
+                <div class="nature-elements">
+                    🦋 🌺 🌸 🌼
+                </div>
+            </div>
+            <div class="floating-petals"></div>
+        </div>
+    </div>
+    <div id="section5" class="section">
+        <div class="content">
+            <div class="firework-finale"></div>
+            <div class="main-content">
+                <div class="grand-finale">
+                    <div class="finale-text">Selamat Ulang Tahun Gumelar</div>
+                    <div class="finale-emoji">🎉 🎂 🎊</div>
+                    <div class="finale-wish">Sukses dan bahagia selalu!</div>
+                    <div class="wish-text-sub">Doa terbaik untuk Gumelar!</div>
+                    <div class="wish-text-sub">Ucapan ini khusus diberikan untuk Gumelar</div>
+                </div>
+            </div>
+            <div class="sparkle-container"></div>
+        </div>
+    </div>
+
+    <script>
+        let isTransitioning = false; // Flag to track transition state
+        
+        // Create fireworks
+        function createFirework() {
+            const fireworksContainer = document.getElementById('fireworks');
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * 100 + '%';
+            firework.style.top = Math.random() * 100 + '%';
+            const hue = Math.random() * 360;
+            firework.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+            firework.style.boxShadow = `0 0 20px hsl(${hue}, 100%, 50%), 
+                                      0 0 40px hsl(${hue}, 100%, 50%),
+                                      0 0 60px hsl(${hue}, 100%, 50%)`;
+            fireworksContainer.appendChild(firework);
+            
+            // Create fewer particles for each firework to reduce load
+            for(let i = 0; i < 4; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                particle.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+                particle.style.left = firework.style.left;
+                particle.style.top = firework.style.top;
+                particle.style.transform = `rotate(${i * 90}deg)`;
+                fireworksContainer.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+            setTimeout(() => firework.remove(), 800);
+            createSparkles(firework.style.left, firework.style.top, 6);
+        }
+
+        // Create balloons
+        function createBalloon() {
+            const balloonsContainer = document.getElementById('balloons');
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.textContent = '🎈';
+            balloon.style.left = Math.random() * 100 + '%';
+            balloonsContainer.appendChild(balloon);
+            setTimeout(() => balloon.remove(), 10000);
+        }
+
+        // Switch sections
+        let currentSection = 1;
+        function switchSection(nextSection) {
+            if (isTransitioning) return; // Prevent switching if already in transition
+            isTransitioning = true;
+
+            const currentSectionElement = document.getElementById(`section${currentSection}`);
+            const nextSectionElement = document.getElementById(`section${nextSection}`);
+
+            // Remove active class from current section
+            currentSectionElement.classList.remove('active');
+            
+            // Add active class to next section after a delay
+            setTimeout(() => {
+                nextSectionElement.classList.add('active');
+                currentSection = nextSection;
+                
+                // Reset transition flag after animation completes
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 2000); // Match this with your longest animation duration
+            }, 1000); // Delay before showing next section
+        }
+
+        // Navigation functions
+        function updateSectionClasses() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.classList.remove('active', 'prev', 'next');
+                const sectionNumber = index + 1;
+                
+                if (sectionNumber === currentSection) {
+                    section.classList.add('active');
+                } else if (sectionNumber < currentSection || 
+                    (currentSection === 1 && sectionNumber === 5)) {
+                    section.classList.add('prev');
+                } else {
+                    section.classList.add('next');
+                }
+            });
+        }
+
+        function getTransitionAnimation(from, to) {
+            const transitions = {
+                '1-2': { out: 'rotateY(-90deg) translateZ(-1000px)', in: 'rotateY(90deg) translateZ(-1000px)' },
+                '2-3': { out: 'rotateX(-90deg) translateZ(-1000px)', in: 'rotateX(90deg) translateZ(-1000px)' },
+                '3-4': { out: 'scale(0.3) translateZ(-3000px)', in: 'scale(0.3) translateZ(3000px)' },
+                '4-5': { out: 'rotateZ(-180deg) translateZ(-1000px)', in: 'rotateZ(180deg) translateZ(-1000px)' },
+                '5-1': { out: 'scale(2) translateZ(1000px)', in: 'scale(0.1) translateZ(-3000px)' }
+            };
+
+            const reverseTransitions = {
+                '2-1': { out: transitions['1-2'].in, in: transitions['1-2'].out },
+                '3-2': { out: transitions['2-3'].in, in: transitions['2-3'].out },
+                '4-3': { out: transitions['3-4'].in, in: transitions['3-4'].out },
+                '5-4': { out: transitions['4-5'].in, in: transitions['4-5'].out },
+                '1-5': { out: transitions['5-1'].in, in: transitions['5-1'].out }
+            };
+
+            const key = `${from}-${to}`;
+            return transitions[key] || reverseTransitions[key] || transitions['1-2'];
+        }
+
+        function animateTransition(direction) {
+            const currentContent = document.querySelector(`#section${currentSection} .content`);
+            const nextSectionNum = direction === 'next' ? 
+                (currentSection === 5 ? 1 : currentSection + 1) : 
+                (currentSection === 1 ? 5 : currentSection - 1);
+            
+            const transition = getTransitionAnimation(currentSection, nextSectionNum);
+            
+            // Apply custom transition timing
+            currentContent.style.transition = 'all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            currentContent.style.transform = transition.out;
+            currentContent.style.opacity = '0';
+            
+            setTimeout(() => {
+                const newContent = document.querySelector(`#section${nextSectionNum} .content`);
+                newContent.style.transition = 'all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1)';
+                newContent.style.transform = transition.in;
+                newContent.style.opacity = '0';
+                
+                requestAnimationFrame(() => {
+                    newContent.style.transform = '';
+                    newContent.style.opacity = '1';
+                });
+            }, 600);
+        }
+
+        function createFloatingText(section) {
+            const sectionNumber = parseInt(section.id.replace('section', ''));
+            const textElements = section.querySelectorAll('.birthday-text, .wish-text, .wish-text-sub, .finale-text');
+            
+            textElements.forEach(element => {
+                const text = element.textContent;
+                element.textContent = '';
+                const chars = [...text];
+                
+                chars.forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    
+                    // Base floating letter class
+                    span.className = 'floating-letter';
+                    
+                    // Random values for animations
+                    const randomAngle = Math.random() * Math.PI * 2;
+                    const randomDistance = Math.random() * 300 + 100;
+                    const randomRotation = Math.random() * 1440 - 720;
+                    
+                    // Section-specific effects
+                    switch(sectionNumber) {
+                        case 1:
+                            span.classList.add('firework-effect');
+                            span.style.setProperty('--explosion-x', Math.cos(randomAngle) * randomDistance + 'px');
+                            span.style.setProperty('--explosion-y', Math.sin(randomAngle) * randomDistance + 'px');
+                            break;
+                        case 2:
+                            span.classList.add('balloon-effect');
+                            span.style.setProperty('--float-x', (Math.random() * 400 - 200) + 'px');
+                            span.style.setProperty('--float-rotation', randomRotation + 'deg');
+                            // Add balloon emoji that follows the text
+                            const balloon = document.createElement('span');
+                            balloon.textContent = '🎈';
+                            balloon.style.position = 'absolute';
+                            balloon.style.fontSize = '1.5em';
+                            balloon.style.top = '-1.5em';
+                            span.appendChild(balloon);
+                            break;
+                        case 3:
+                            span.classList.add('gift-effect');
+                            span.style.setProperty('--gift-x', (Math.random() * 300 - 150) + 'px');
+                            span.style.setProperty('--gift-y', (Math.random() * -200 - 100) + 'px');
+                            span.style.setProperty('--gift-rotation', randomRotation + 'deg');
+                            span.style.setProperty('--target-x', (Math.random() * 400 - 200) + 'px');
+                            span.style.setProperty('--target-y', (Math.random() * -300 - 200) + 'px');
+                            break;
+                        case 4:
+                            span.classList.add('nature-effect');
+                            const windAngle = Math.random() * Math.PI / 4 + Math.PI / 8; // Wind blowing upward
+                            span.style.setProperty('--wind-x', Math.cos(windAngle) * randomDistance + 'px');
+                            span.style.setProperty('--wind-y', -Math.abs(Math.sin(windAngle) * randomDistance) + 'px');
+                            span.style.setProperty('--wind-rotation', randomRotation + 'deg');
+                            // Add random nature emoji
+                            const natureEmojis = ['🌸', '🍃', '🦋', '✨'];
+                            if (Math.random() > 0.7) {
+                                const nature = document.createElement('span');
+                                nature.textContent = natureEmojis[Math.floor(Math.random() * natureEmojis.length)];
+                                nature.style.position = 'absolute';
+                                nature.style.fontSize = '0.8em';
+                                nature.style.transform = 'translate(-50%, -50%)';
+                                span.appendChild(nature);
+                            }
+                            break;
+                        case 5:
+                            span.classList.add('finale-effect');
+                            span.style.setProperty('--finale-x', Math.cos(randomAngle) * randomDistance + 'px');
+                            span.style.setProperty('--finale-y', Math.sin(randomAngle) * randomDistance + 'px');
+                            span.style.setProperty('--finale-rotation', randomRotation + 'deg');
+                            // Add sparkle effect
+                            const sparkle = document.createElement('div');
+                            sparkle.className = 'sparkle';
+                            sparkle.style.position = 'absolute';
+                            span.appendChild(sparkle);
+                            break;
+                    }
+                    
+                    // Staggered animation delay
+                    span.style.animationDelay = (i * 0.1) + 's';
+                    element.appendChild(span);
+                });
+            });
+            
+            // Add additional effects based on section
+            switch(sectionNumber) {
+                case 1:
+                    createFireworkBurst();
+                    break;
+                case 2:
+                    // Create extra balloons
+                    for(let i = 0; i < 10; i++) {
+                        setTimeout(() => createBalloon(), i * 200);
+                    }
+                    break;
+                case 3:
+                    // Create gift particles
+                    createGiftParticles();
+                    break;
+                case 4:
+                    // Create nature particles
+                    createNatureParticles();
+                    break;
+                case 5:
+                    // Create finale effects
+                    createFinaleEffects();
+                    break;
+            }
+        }
+
+        function nextSection() {
+            const currentSectionElement = document.getElementById(`section${currentSection}`);
+            
+            if (currentSection === 2) {
+                // Special transition for section 2
+                createFloatingText(currentSectionElement);
+                setTimeout(() => {
+                    animateTransition('next');
+                    currentSectionElement.classList.remove('active');
+                    currentSection = 3;
+                    setTimeout(() => {
+                        document.getElementById(`section${currentSection}`).classList.add('active');
+                        updateSectionClasses();
+                        updateDots();
+                        createFireworkBurst();
+                    }, 400);
+                }, 2000); // Wait for balloon animation to complete
+            } else {
+                // Normal transition for other sections
+            createFloatingText(currentSectionElement);
+            animateTransition('next');
+            currentSectionElement.classList.remove('active');
+            let nextSectionNum = currentSection === 5 ? 1 : currentSection + 1;
+            currentSection = nextSectionNum;
+            setTimeout(() => {
+                const nextSectionElement = document.getElementById(`section${currentSection}`);
+                nextSectionElement.classList.add('active');
+                updateSectionClasses();
+                updateDots();
+                createFireworkBurst();
+                if (currentSection === 1) {
+                    setTimeout(restoreSection1Text, 50);
+                }
+            }, 400);
+            }
+            
+            resetTimer(); // Reset timer on manual navigation
+        }
+
+        function prevSection() {
+            const currentSectionElement = document.getElementById(`section${currentSection}`);
+            createFloatingText(currentSectionElement);
+            animateTransition('prev');
+            currentSectionElement.classList.remove('active');
+            currentSection = currentSection === 1 ? 5 : currentSection - 1;
+            resetTimer(); // Reset timer on manual navigation
+        setTimeout(() => {
+            const prevSectionElement = document.getElementById(`section${currentSection}`);
+            prevSectionElement.classList.add('active');
+            updateSectionClasses();
+            updateDots();
+            createFireworkBurst();
+            if (currentSection === 1) {
+                setTimeout(restoreSection1Text, 50);
+            }
+        }, 400);
+        }
+
+        function goToSection(sectionNumber) {
+            if (sectionNumber === currentSection) return;
+            
+            const direction = sectionNumber > currentSection ? 'next' : 'prev';
+            animateTransition(direction);
+            document.getElementById(`section${currentSection}`).classList.remove('active');
+            currentSection = sectionNumber;
+        setTimeout(() => {
+            const gotoSectionElement = document.getElementById(`section${currentSection}`);
+            gotoSectionElement.classList.add('active');
+            updateSectionClasses();
+            updateDots();
+            createFireworkBurst();
+            if (currentSection === 1) {
+                setTimeout(restoreSection1Text, 50);
+            }
+        }, 400);
+// Restore text for section 1 after animation clears it
+function restoreSection1Text() {
+    const section1 = document.getElementById('section1');
+    if (!section1) return;
+    const mainContent = section1.querySelector('.main-content');
+    if (!mainContent) return;
+    // Restore the birthday texts if empty
+    // Always restore all texts regardless of current content
+    const birthdayText = mainContent.querySelector('.birthday-text');
+    if (birthdayText) birthdayText.textContent = '生日快乐！';
+    const birthdayTextSub = mainContent.querySelectorAll('.birthday-text-sub');
+    if (birthdayTextSub.length > 0) birthdayTextSub[0].textContent = 'Happy Birthday!';
+    if (birthdayTextSub.length > 1) birthdayTextSub[1].textContent = 'Untuk Gumelar';
+}
+        }
+
+        function createFireworkBurst() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const burst = document.createElement('div');
+                    burst.className = 'transition-burst';
+                    burst.style.left = Math.random() * 100 + '%';
+                    burst.style.top = Math.random() * 100 + '%';
+                    burst.style.setProperty('--angle', Math.random() * 360 + 'deg');
+                    burst.style.setProperty('--color', `hsl(${Math.random() * 360}, 100%, 50%)`);
+                    document.body.appendChild(burst);
+                    setTimeout(() => burst.remove(), 1000);
+                }, i * 50);
+            }
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentSection);
+            });
+        }
+
+        // Additional section-specific effects
+        function createGiftParticles() {
+            const giftEmojis = ['🎁', '🎀', '💝', '✨'];
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const gift = document.createElement('div');
+                    gift.className = 'particle-emoji';
+                    gift.textContent = giftEmojis[Math.floor(Math.random() * giftEmojis.length)];
+                    gift.style.left = Math.random() * 100 + 'vw';
+                    gift.style.top = Math.random() * 100 + 'vh';
+                    gift.style.transform = `scale(${Math.random() * 1.5 + 0.5})`;
+                    gift.style.animation = `floatAround ${Math.random() * 4 + 6}s infinite`;
+                    document.body.appendChild(gift);
+                    setTimeout(() => gift.remove(), 6000);
+                }, i * 100);
+            }
+        }
+
+        function createNatureParticles() {
+            const natureEmojis = ['🌸', '🍃', '🦋', '✨', '🌺', '🌼', '🎋', '🌿', '🍀'];
+            const patterns = ['spiral', 'wave', 'zigzag', 'circle'];
+            
+            // Create multiple waves of particles with different patterns
+            for(let wave = 0; wave < 3; wave++) {
+                const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+                const particleCount = 40;
+                
+                for(let i = 0; i < particleCount; i++) {
+                    setTimeout(() => {
+                        const nature = document.createElement('div');
+                        nature.className = 'particle-emoji';
+                        nature.textContent = natureEmojis[Math.floor(Math.random() * natureEmojis.length)];
+                        
+                        // Different animation patterns
+                        switch(pattern) {
+                            case 'spiral':
+                                const angle = (i / particleCount) * Math.PI * 6;
+                                const radius = i * 10;
+                                nature.style.left = '50vw';
+                                nature.style.top = '50vh';
+                                nature.style.transform = `translate(-50%, -50%) rotate(${angle}rad) translateX(${radius}px)`;
+                                nature.style.animation = `spiralNature ${Math.random() * 4 + 6}s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                                break;
+                            case 'wave':
+                                nature.style.left = (i / particleCount * 100) + 'vw';
+                                nature.style.top = '0';
+                                nature.style.animation = `waveNature ${Math.random() * 3 + 5}s cubic-bezier(0.4, 0, 0.2, 1) infinite`;
+                                break;
+                            case 'zigzag':
+                                nature.style.left = (i / particleCount * 100) + 'vw';
+                                nature.style.top = '-50px';
+                                nature.style.animation = `zigzagNature ${Math.random() * 4 + 6}s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                                break;
+                            case 'circle':
+                                const circleAngle = (i / particleCount) * Math.PI * 2;
+                                nature.style.left = '50vw';
+                                nature.style.top = '50vh';
+                                nature.style.transform = `translate(-50%, -50%) rotate(${circleAngle}rad) translateX(200px)`;
+                                nature.style.animation = `circleNature ${Math.random() * 5 + 8}s linear infinite`;
+                                break;
+                        }
+                        
+                        // Add glowing effect
+                        nature.style.filter = `blur(1px) brightness(${Math.random() * 0.5 + 1.5})`;
+                        document.body.appendChild(nature);
+                        setTimeout(() => nature.remove(), 8000);
+                    }, i * 100 + wave * 2000);
+                }
+            }
+        }
+
+        function createFinaleEffects() {
+            // Create intense firework burst
+            for(let i = 0; i < 3; i++) {
+                setTimeout(() => createFireworkBurst(), i * 1000);
+            }
+            
+            // Create spectacular drone show
+            createDroneShow();
+            
+            // Create multiple layers of animated emojis
+            const finaleEmojis = ['🎉', '🎊', '🎈', '✨', '💫', '⭐', '🌟', '🎆', '🎇'];
+            const patterns = ['spiral', 'fountain', 'explosion', 'rain'];
+            
+            // Create multiple waves of different patterns
+            patterns.forEach((pattern, patternIndex) => {
+                const totalEmojis = pattern === 'rain' ? 100 : 50;
+                
+                for(let i = 0; i < totalEmojis; i++) {
+                    setTimeout(() => {
+                        const emoji = document.createElement('div');
+                        emoji.className = 'finale-emoji-particle';
+                        emoji.textContent = finaleEmojis[Math.floor(Math.random() * finaleEmojis.length)];
+                        
+                        switch(pattern) {
+                            case 'spiral':
+                                const angle = (i / totalEmojis) * Math.PI * 6;
+                                const radius = i * 15;
+                                emoji.style.left = '50vw';
+                                emoji.style.top = '50vh';
+                                emoji.style.transform = `translate(-50%, -50%) rotate(${angle}rad) translateX(${radius}px)`;
+                                emoji.style.animation = 'finaleSpiral 4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                                break;
+                            
+                            case 'fountain':
+                                emoji.style.left = '50vw';
+                                emoji.style.bottom = '0';
+                                const spreadX = (Math.random() - 0.5) * 100;
+                                emoji.style.setProperty('--spread-x', spreadX + 'vw');
+                                emoji.style.animation = 'finaleFountain 3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                                break;
+                            
+                            case 'explosion':
+                                const explosionAngle = Math.random() * Math.PI * 2;
+                                const speed = Math.random() * 100 + 50;
+                                emoji.style.left = '50vw';
+                                emoji.style.top = '50vh';
+                                emoji.style.setProperty('--explosion-angle', explosionAngle + 'rad');
+                                emoji.style.setProperty('--explosion-speed', speed + 'px');
+                                emoji.style.animation = 'finaleExplosion 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                                break;
+                            
+                            case 'rain':
+                                emoji.style.left = Math.random() * 100 + 'vw';
+                                emoji.style.top = '-50px';
+                                emoji.style.animation = 'finaleRain 3s linear forwards';
+                                break;
+                        }
+                        
+                        // Add glowing and trailing effects
+                        emoji.style.filter = `blur(1px) brightness(${Math.random() * 1 + 1.5})`;
+                        document.body.appendChild(emoji);
+                        
+                        // Create trailing particles
+                        if(Math.random() > 0.7) {
+                            const trail = document.createElement('div');
+                            trail.className = 'finale-trail';
+                            trail.style.left = emoji.style.left;
+                            trail.style.top = emoji.style.top;
+                            trail.style.animation = 'trailFade 1s linear forwards';
+                            document.body.appendChild(trail);
+                            setTimeout(() => trail.remove(), 1000);
+                        }
+                        
+                        setTimeout(() => emoji.remove(), 4000);
+                    }, i * 50 + patternIndex * 1000);
+                }
+            });
+        }
+
+        function createDroneShow() {
+            const droneContainer = document.createElement('div');
+            droneContainer.className = 'drone-show';
+            document.querySelector('#section5').appendChild(droneContainer);
+
+            // Points for Chinese character "福" (fu - blessing)
+            const characterPoints = [
+                // Main outline
+                [50, 20], [30, 20], [30, 80], [70, 80], [70, 20], [50, 20],
+                // Horizontal strokes
+                [30, 40], [70, 40],
+                [30, 60], [70, 60],
+                // Center vertical
+                [50, 20], [50, 80],
+                // Diagonal decorative strokes
+                [40, 30], [60, 50],
+                [40, 50], [60, 30],
+                [40, 70], [60, 90],
+                // Additional detail points
+                [45, 35], [55, 45],
+                [45, 55], [55, 65],
+                [45, 75], [55, 85]
+            ];
+
+            const totalDrones = 200; // Increased number of drones for more detail
+            
+            for (let i = 0; i < totalDrones; i++) {
+                const drone = document.createElement('div');
+                drone.className = 'drone';
+
+                // Random starting position from outside the view
+                const startAngle = Math.random() * Math.PI * 2;
+                const startRadius = 1000 + Math.random() * 500;
+                const startX = Math.cos(startAngle) * startRadius;
+                const startY = Math.sin(startAngle) * startRadius;
+
+                // Target position based on character points
+                const pointIndex = Math.floor((i / totalDrones) * characterPoints.length);
+                const [targetX, targetY] = characterPoints[pointIndex % characterPoints.length];
+                
+                // Add some randomness to make it more organic
+                const randomOffset = Math.random() * 5 - 2.5;
+                
+                drone.style.setProperty('--start-x', startX + 'px');
+                drone.style.setProperty('--start-y', startY + 'px');
+                drone.style.setProperty('--end-x', targetX + randomOffset + '%');
+                drone.style.setProperty('--end-y', targetY + randomOffset + '%');
+
+                // Staggered animation start
+                drone.style.animation = `
+                    droneFormation 6s ${i * 30}ms cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                    droneFloat 4s ${i * 30}ms ease-in-out infinite
+                `;
+
+                droneContainer.appendChild(drone);
+
+                // Add glowing effect
+                const glow = document.createElement('div');
+                glow.className = 'drone-glow';
+                drone.appendChild(glow);
+            }
+
+            // Add occasional light beams between drones
+            setInterval(() => {
+                const drones = droneContainer.querySelectorAll('.drone');
+                const randomDrone1 = drones[Math.floor(Math.random() * drones.length)];
+                const randomDrone2 = drones[Math.floor(Math.random() * drones.length)];
+                
+                if (randomDrone1 && randomDrone2) {
+                    const beam = document.createElement('div');
+                    beam.className = 'drone-beam';
+                    beam.style.left = randomDrone1.offsetLeft + 'px';
+                    beam.style.top = randomDrone1.offsetTop + 'px';
+                    const dx = randomDrone2.offsetLeft - randomDrone1.offsetLeft;
+                    const dy = randomDrone2.offsetTop - randomDrone1.offsetTop;
+                    const angle = Math.atan2(dy, dx);
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    beam.style.width = distance + 'px';
+                    beam.style.transform = `rotate(${angle}rad)`;
+                    
+                    droneContainer.appendChild(beam);
+                    setTimeout(() => beam.remove(), 500);
+                }
+            }, 200);
+        }
+
+        // Create random emojis with enhanced effects
+        function createEmoji() {
+            const emojis = ['🎉', '🎊', '🎈', '✨', '💫', '⭐', '🌟'];
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji-rain';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + '%';
+            emoji.style.transform = `scale(${Math.random() * 0.5 + 0.8}) rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(emoji);
+            
+            // Add glowing effect
+            emoji.style.filter = `blur(1px) brightness(${Math.random() * 0.5 + 1.5})`;
+            setTimeout(() => emoji.remove(), 3000);
+        }
+
+        function createSparkles(x, y) {
+            // Accept optional count parameter for sparkles
+            let count = 6;
+            if (arguments.length > 2) count = arguments[2];
+            for(let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = x;
+                sparkle.style.top = y;
+                sparkle.style.transform = `translate(${(Math.random() - 0.5) * 60}px, ${(Math.random() - 0.5) * 60}px)`;
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 800);
+            }
+        }
+
+        function createParticleExplosion(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+            for(let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'sparkle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                const angle = (i / 30) * 360;
+                const velocity = 5;
+                particle.style.animation = 'sparkle 1s ease-out forwards';
+                particle.style.transform = `rotate(${angle}deg) translateX(${velocity * 20}px)`;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        // Add interactive particle effects
+        document.addEventListener('mousemove', (e) => {
+            if(Math.random() > 0.8) {
+                createSparkles(e.clientX + 'px', e.clientY + 'px');
+            }
+        });
+
+        document.addEventListener('click', createParticleExplosion);
+
+        // Background music control
+        const bgMusic = document.getElementById('bgMusic');
+        
+        function playMusic() {
+            bgMusic.play().catch(error => {
+                console.log("Auto-play prevented. User needs to interact first.");
+            });
+        }
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+            } else {
+                bgMusic.pause();
+            }
+        }
+
+        // Try to play music on first interaction
+        document.addEventListener('click', function firstClick() {
+            playMusic();
+            document.removeEventListener('click', firstClick);
+        }, { once: true });
+
+        // Auto next section timer
+        let autoNextTimer;
+        let lastInteractionTime = Date.now();
+
+        function startAutoNextTimer() {
+            if (autoNextTimer) clearInterval(autoNextTimer);
+            autoNextTimer = setInterval(() => {
+                const currentTime = Date.now();
+                if (currentTime - lastInteractionTime >= 5000) { // 5 seconds
+                    nextSection();
+                }
+            }, 5000);
+        }
+
+        function resetTimer() {
+            lastInteractionTime = Date.now();
+        }
+
+        // Reset timer on user interaction
+        document.addEventListener('click', resetTimer);
+        document.addEventListener('mousemove', resetTimer);
+        document.addEventListener('keydown', resetTimer);
+
+        // Start animations with varying intervals for more natural effect
+// Reduce firework frequency for section 1
+setInterval(createFirework, Math.random() * 400 + 400);
+        setInterval(createBalloon, Math.random() * 300 + 300);
+        setInterval(createEmoji, Math.random() * 150 + 150);
+
+        // Start auto next timer when page loads
+        startAutoNextTimer();
+    </script>
+</body>
+</html>
